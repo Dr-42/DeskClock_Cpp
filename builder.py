@@ -11,7 +11,7 @@ obj_dir = 'obj'
 src_dir = 'src'
 freetype_cfg = '-IC:/msys64/mingw64/bin/../include/freetype2 -IC:/msys64/mingw64/bin/../include -IC:/msys64/mingw64/bin/../include/libpng16 -IC:/msys64/mingw64/bin/../include/harfbuzz -IC:/msys64/mingw64/bin/../include/glib-2.0 -IC:/msys64/mingw64/bin/../lib/glib-2.0/include'
 freetype_lib = '-LC:/msys64/mingw64/bin/../lib -lfreetype'
-libs = '-lm -lglew32 -lglfw3 -lopengl32 -lwinmm ' + freetype_lib
+libs = '-lm -lglew32 -lglfw3 -lopengl32 -lwinmm -mwindows ' + freetype_lib
 cflags = '-g -Wall ' + freetype_cfg
 
 
