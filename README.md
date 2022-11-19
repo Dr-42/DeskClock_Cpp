@@ -21,7 +21,7 @@ I am using the MSYS2 mingw 64-bit g++ compiler for installation of libraries and
 To install libraries in msys2
 
 ```
-pacman -S mingw-w64-glew mingw-w64-glfw mingw-w64-stb mingw-w64-freetype mingw-w64-crt-git
+pacman -S mingw-w64-x86_64-glew mingw-w64-x86_64-glfw mingw-w64-x86_64-stb mingw-w64-x86_64-freetype mingw-w64-x86_64-crt-git
 ```
 
 
