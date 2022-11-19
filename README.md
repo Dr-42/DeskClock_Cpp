@@ -1,12 +1,6 @@
-# Nomu_Engine
+# DeskClock
 
-This is a basic Rendering engine using opengl. Most of it learned from https://learnopengl.com.
-
-## Features
-
-This Engine copiles and works on both Windows and Linux. This is made possible by my own build tool CppBuild. I never got the hang of cmake and I don't knnow why my  Makefiles werent very satisfying. So this is the result.
-
-## Usage
+This is a C++ implementation of my previously built DeskClock using C++ and some nicer features(date and colored hands)
 
 ### Environment setup
 
@@ -14,20 +8,26 @@ This Engine copiles and works on both Windows and Linux. This is made possible b
 
 I am using the MSYS2 mingw 64-bit g++ compiler for installation of libraries and such.
 
-#### Linux
-
-I have tested this both on my wsl and physical laptop.
-
 #### Dependencies
 
 1. GLEW
 2. GLFW
 3. Freetype2
 4. STB Image
+5. mingw64_crt
 
 ### Build
 
-After proper installation and configuration of libraries, you can run
+To install libraries in msys2
+
+```
+pacman -S mingw-w64-glew mingw-w64-glfw mingw-w64-stb mingw-w64-freetype mingw-w64-crt-git
+```
+
+
+After proper installation and configuration of libraries change the game.cpp file's Resource Manager calls to the location where you cloned the repo.
+
+Then run
 
 ``` python builder.py run ```
 
