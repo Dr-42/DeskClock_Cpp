@@ -1,16 +1,21 @@
 #include <GL/glew.h>
+#define GLFW_EXPOSE_NATIVE_WIN32
 #include <GLFW/glfw3.h>
+#include <GLFW/glfw3native.h>
 
 #include "game.h"
 #include "utils/resource_manager.h"
 
 #include <iostream>
 
+
+
 // GLFW function declarations
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
+int hide_taskbar_icon(GLFWwindow* win);
 
 // The Width of the screen
 const unsigned int SCREEN_WIDTH = 450;
@@ -36,6 +41,7 @@ int main(int argc, char *argv[])
     GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "App", nullptr, nullptr);
     glfwSetWindowPos(window, 735, 50);
     glfwMakeContextCurrent(window);
+    hide_taskbar_icon(window);
 
 
     // glew: load all OpenGL function pointers
@@ -133,4 +139,11 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     // make sure the viewport matches the new window dimensions; note that width and 
     // height will be significantly larger than specified on retina displays.
     glViewport(0, 0, width, height);
+}
+
+int hide_taskbar_icon(GLFWwindow* win)
+{
+    glfwHideWindow(win);
+    SetWindowLong(glfwGetWin32Window(win), GWL_EXSTYLE, WS_EX_TOOLWINDOW);
+    glfwShowWindow(win);
 }
