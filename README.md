@@ -39,3 +39,4 @@ To build only run
 
 ``` python builder.py ```
 The binaries will be placed in the bin directory
+![clk](https://user-images.githubusercontent.com/64161204/202875201-9323d65a-1955-4972-ba35-8dc294f3800a.png)
