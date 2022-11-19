@@ -24,19 +24,30 @@ To install libraries in msys2
 pacman -S mingw-w64-x86_64-glew mingw-w64-x86_64-glfw mingw-w64-x86_64-stb mingw-w64-x86_64-freetype mingw-w64-x86_64-crt-git
 ```
 
+For the build script to work
+```
+pip install termcolor
+```
 
 After proper installation and configuration of libraries change the game.cpp file's Resource Manager calls to the location where you cloned the repo.
 
 Then run
 
-``` python builder.py run ```
+``` 
+python builder.py run
+```
 
 To clean build, run
 
-``` python builder.py clean ```
+```
+python builder.py clean
+python builder.py
+```
 
 To build only run
 
-``` python builder.py ```
+```
+python builder.py
+```
 The binaries will be placed in the bin directory
 ![clk](https://user-images.githubusercontent.com/64161204/202875201-9323d65a-1955-4972-ba35-8dc294f3800a.png)
