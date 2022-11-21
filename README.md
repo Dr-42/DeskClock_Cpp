@@ -29,9 +29,7 @@ For the build script to work
 pip install termcolor
 ```
 
-After proper installation and configuration of libraries change the game.cpp file's Resource Manager calls to the location where you cloned the repo.
-
-Then run
+After proper installation and configuration of libraries run
 
 ``` 
 python builder.py run
