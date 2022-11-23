@@ -6,7 +6,7 @@ Text::~Text()
     delete m_textRenderer;
 }
 
-Text::Text(std::string text, const char* fontPath, Shader* shader, int font_size, int screen_width, int screen_height, Transform* transform)
+Text::Text(std::string text, const char *fontPath, Shader *shader, int font_size, int screen_width, int screen_height, Transform *transform)
 {
     m_text = text;
     m_font_size = font_size;
@@ -29,22 +29,23 @@ void Text::Init()
 
 void Text::Update(float dt)
 {
-    if(isActivated)
+}
+
+void Text::Render()
+{
+    if (isActivated)
     {
         m_textRenderer->RenderText(m_text, m_transform->GetPosition().x, m_transform->GetPosition().y, m_transform->GetScale().x, m_color);
-
     }
-
 }
 
 void Text::Destroy()
 {
-
 }
 
-Text* Text::Clone()
+Text *Text::Clone()
 {
-    Text* text = new Text(m_text, m_fontPath, m_textRenderer->GetShader(), m_font_size, screenWidth, screenHeight, m_entity->GetComponent<Transform>());
+    Text *text = new Text(m_text, m_fontPath, m_textRenderer->GetShader(), m_font_size, screenWidth, screenHeight, m_entity->GetComponent<Transform>());
     return text;
 }
 
@@ -63,12 +64,12 @@ void Text::SetColor(glm::vec3 color)
     m_color = color;
 }
 
-void Text::SetFontPath(const char* fontPath)
+void Text::SetFontPath(const char *fontPath)
 {
     m_fontPath = fontPath;
 }
 
-TextRenderer* Text::GetTextRenderer()
+TextRenderer *Text::GetTextRenderer()
 {
     return m_textRenderer;
 }

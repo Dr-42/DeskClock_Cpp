@@ -15,7 +15,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
-int hide_taskbar_icon(GLFWwindow* win);
+void hide_taskbar_icon(GLFWwindow* win);
 
 // The Width of the screen
 const unsigned int SCREEN_WIDTH = 450;
@@ -86,10 +86,13 @@ int main(int argc, char *argv[])
 
         // update game state
         // -----------------
+        App.Update(deltaTime);
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        App.Update(deltaTime);
+        // render
+        // ------
+        App.Render();
 
         glfwSwapBuffers(window);
     }
@@ -141,7 +144,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     glViewport(0, 0, width, height);
 }
 
-int hide_taskbar_icon(GLFWwindow* win)
+void hide_taskbar_icon(GLFWwindow* win)
 {
     glfwHideWindow(win);
     SetWindowLong(glfwGetWin32Window(win), GWL_EXSTYLE, WS_EX_TOOLWINDOW);

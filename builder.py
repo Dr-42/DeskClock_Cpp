@@ -5,7 +5,7 @@ import os
 from termcolor import colored
 
 # Directories
-compiler = 'g++'
+compiler = 'g++ -O2 -std=c++17'
 bin_dir = 'bin'
 obj_dir = 'obj'
 src_dir = 'src'
@@ -223,12 +223,16 @@ def check_mode():
     if len(os.sys.argv) == 1:
         return 'build'
     elif len(os.sys.argv) == 2:
-        if os.sys.argv[1] == 'clean':
+        if os.sys.argv[1] == 'clean' or os.sys.argv[1] == 'c':
             return 'clean'
-        elif os.sys.argv[1] == 'run':
+        elif os.sys.argv[1] == 'run' or os.sys.argv[1] == 'r':
             return 'run'
-        elif os.sys.argv[1] == 'help':
+        elif os.sys.argv[1] == 'help' or os.sys.argv[1] == 'h':
             return 'help'
+        elif os.sys.argv[1] == 'build' or os.sys.argv[1] == 'b':
+            return 'build'
+        elif os.sys.argv[1] == 'rebuild' or os.sys.argv[1] == 'rb':
+            return 'rebuild'
         else:
             print(colored('[ERROR] ', 'red'), 'Unknown Command')
             exit(1)
@@ -262,6 +266,12 @@ def main():
             os.system('.\\bin\\main.exe')
         elif platform.system() == 'Linux':
             os.system(bin_dir + '/' + 'main')
+        save_md5()
+    elif mode == 'rebuild':
+        clean()
+        load_md5()
+        build_objects(src_dir, obj_dir)
+        link()
         save_md5()
     elif mode == 'help':
         usage()

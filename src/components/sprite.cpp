@@ -39,13 +39,17 @@ void Sprite::Init()
     m_ConfigureShader();
 }
 
-void Sprite::Update(float dt)
+void Sprite::Render()
 {
     if(isActivated)
     {
         m_spriteRenderer->DrawSprite(m_texture, m_transform->GetPosition(), m_transform->GetScale(), m_transform->GetRotation(), m_color);
     }
 
+}
+
+void Sprite::Update(float dt)
+{
 }
 
 void Sprite::Destroy()

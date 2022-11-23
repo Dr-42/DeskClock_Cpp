@@ -22,6 +22,7 @@ public:
 
     void Init() override;
     void Update(float dt) override;
+    void Render() override;
     void Destroy();
     Text* Clone() override;
 

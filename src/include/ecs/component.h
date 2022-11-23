@@ -12,6 +12,7 @@ public:
 
     virtual void Init();
     virtual void Update(float dt);
+    virtual void Render();
     virtual void Destroy();
 
     virtual Component* Clone();

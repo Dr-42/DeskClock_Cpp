@@ -31,12 +31,12 @@ Game::~Game()
 
 void Game::Init(){
     // load shaders
-    ResourceManager::LoadShader("../src/shaders/sprite_vert_shad.glsl", "../src/shaders/sprite_frag_shad.glsl", nullptr, "sprite");
-    ResourceManager::LoadTexture("../src/textures/clock_face.png", true, "face");
-    ResourceManager::LoadTexture("../src/textures/clock_hand.png", true, "hand");
+    ResourceManager::LoadShader("assets/shaders/sprite_vert_shad.glsl", "assets/shaders/sprite_frag_shad.glsl", nullptr, "sprite");
+    ResourceManager::LoadTexture("assets/textures/clock_face.png", true, "face");
+    ResourceManager::LoadTexture("assets/textures/clock_hand.png", true, "hand");
 
-    const char* fontPath = "../src/fonts/OCRAEXT.TTF";
-    ResourceManager::LoadShader("../src/shaders/text_vert_shad.glsl", "../src/shaders/text_frag_shad.glsl", nullptr, "text");
+    const char* fontPath = "assets/fonts/OCRAEXT.TTF";
+    ResourceManager::LoadShader("assets/shaders/text_vert_shad.glsl", "assets/shaders/text_frag_shad.glsl", nullptr, "text");
 
     MousePos = new glm::vec2(0.0f, 0.0f);
 
@@ -150,10 +150,16 @@ void Game::Update(float dt)
 
     //Play gong.wav every hour
     if(second == 0 && minute == 0 && !played){
-        played = PlaySound(TEXT("../src/sound/Gong.wav"), NULL, SND_FILENAME | SND_ASYNC);
+        played = PlaySound(TEXT("assets/sound/Gong.wav"), NULL, SND_FILENAME | SND_ASYNC);
     }
 
     if(second != 0){
         played = false;
     }
+
+    Sleep(1000 - dt);
+}
+
+void Game::Render(){
+    root->Render();
 }

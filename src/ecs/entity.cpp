@@ -46,6 +46,19 @@ void Entity::Update(float dt)
     }
 }
 
+void Entity::Render()
+{
+    for (auto component : m_components)
+    {
+        component->Render();
+    }
+
+    for (auto child : m_children)
+    {
+        child->Render();
+    }
+}
+
 Entity* Entity::Clone()
 {
     Entity* clone = new Entity(m_name);

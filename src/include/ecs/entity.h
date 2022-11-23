@@ -18,6 +18,7 @@ public:
 
     void Init();
     void Update(float dt);
+    void Render();
     Entity* Clone();
 
     void AddComponent(Component* component);
