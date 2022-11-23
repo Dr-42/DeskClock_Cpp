@@ -2,9 +2,17 @@
 
 This is a C++ implementation of my previously built DeskClock using C++ and some nicer features(date and colored hands)
 
-### Environment setup
+It is currently configured for 1920 x 1080 resolution for now.
 
-#### Windows
+## Install
+--------------------------------------------------------------
+
+You can build the software yourself or just download the setup file provided.
+
+## Build
+--------------------------------------------------------------
+
+### Environment setup
 
 I am using the MSYS2 mingw 64-bit g++ compiler for installation of libraries and such.
 
@@ -15,8 +23,6 @@ I am using the MSYS2 mingw 64-bit g++ compiler for installation of libraries and
 3. Freetype2
 4. STB Image
 5. mingw64_crt
-
-### Build
 
 To install libraries in msys2
 
@@ -32,20 +38,19 @@ pip install termcolor
 After proper installation and configuration of libraries run
 
 ``` 
-python builder.py run
+python builder.py
 ```
 
 To clean build, run
 
 ```
-python builder.py clean
-python builder.py
+python builder.py rb
 ```
 
-To build only run
+To run
+```
+python builder.py run
+```
 
-```
-python builder.py
-```
 The binaries will be placed in the bin directory
 ![clk](https://user-images.githubusercontent.com/64161204/202875201-9323d65a-1955-4972-ba35-8dc294f3800a.png)
