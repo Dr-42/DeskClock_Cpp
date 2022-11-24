@@ -46,6 +46,10 @@ void Game::Init(){
     root->AddChild("date");
     root->GetChild("date")->AddComponent( new Text("", fontPath, ResourceManager::GetShader("text"), 72, this->Width, this->Height, root->GetChild("date")->GetComponent<Transform>()));
 
+    root->AddChild("day");
+    root->GetChild("day")->AddComponent(new Text("", fontPath, ResourceManager::GetShader("text"), 50, this->Width, this->Height, root->GetChild("day")->GetComponent<Transform>()));
+
+
     root->AddChild("hour_hand");
     root->GetChild("hour_hand")->AddComponent(new Sprite(ResourceManager::GetTexture("hand"), ResourceManager::GetShader("sprite"), Width, Height, root->GetChild("hour_hand")->GetComponent<Transform>()));
 
@@ -57,7 +61,7 @@ void Game::Init(){
     e->SetName("second_hand");
     root->AddChild(e);
 
-    root->Init();
+        root->Init();
 
     // configure game objects
     root->GetChild("clock")->GetComponent<Transform>()->SetPosition(glm::vec2(Width / 2.0f, Height / 2.0f));
@@ -79,6 +83,11 @@ void Game::Init(){
     root->GetChild("date")->GetComponent<Transform>()->SetScale(glm::vec2(1.0f, 1.0f));
 
     root->GetChild("date")->GetComponent<Text>()->SetColor(glm::vec3(0.3f, 0.0f, 0.3f));
+
+    root->GetChild("day")->GetComponent<Transform>()->SetPosition(glm::vec2(180, Height /2.0f + 70));
+    root->GetChild("day")->GetComponent<Transform>()->SetScale(glm::vec2(1.0f, 1.0f));
+
+    root->GetChild("day")->GetComponent<Text>()->SetColor(glm::vec3(0.3f, 0.0f, 0.3f));
 }
 void Game::ProcessInput(float dt)
 {
@@ -108,11 +117,38 @@ void Game::Update(float dt)
     if(now->tm_mday < 10) {
         date = "0" + date;
     }
+
     date += "/";
     if(now->tm_mon < 10) {
         date += "0";
     }
     date += std::to_string(now->tm_mon + 1);
+
+    int day_num = now->tm_wday;
+    std::string day;
+    switch(day_num){
+        case 0:
+            day = "SUN";
+            break;
+        case 1:
+            day = "MON";
+            break;
+        case 2:
+            day = "TUE";
+            break;
+        case 3:
+            day = "WED";
+            break;
+        case 4:
+            day = "THU";
+            break;
+        case 5:
+            day = "FRI";
+            break;
+        case 6:
+            day = "SAT";
+            break;
+    }
 
     float hour_angle = (hour * 30.0f) + (minute * 0.5f);
     float minute_angle = (minute * 6.0f) + (second * 0.1f);
@@ -147,6 +183,7 @@ void Game::Update(float dt)
     root->GetChild("second_hand")->GetComponent<Transform>()->SetRotation(second_angle);
 
     root->GetChild("date")->GetComponent<Text>()->SetText(date);
+    root->GetChild("day")->GetComponent<Text>()->SetText(day);
 
     //Play gong.wav every hour
     if(second == 0 && minute == 0 && !played){
