@@ -1,0 +1,12 @@
+[build]
+compiler = "g++"
+build_dir = "./bin"
+obj_dir = "./obj"
+
+[[targets]]
+name = "DeskClock"
+src = "./src/"
+include_dir = "./src/include/"
+type = "exe"
+cflags = "-O3 `pkg-config --cflags freetype2` -std=c++17"
+libs = "-lm -lglew32 -lglfw3 -lopengl32 -lwinmm -mwindows -static-libstdc++ `pkg-config --libs freetype2`"

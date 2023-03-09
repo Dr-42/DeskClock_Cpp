@@ -12,6 +12,8 @@ You can build the software yourself or just download the setup file provided.
 ## Build
 --------------------------------------------------------------
 
+This project uses a Rust based build tool called builder_cpp
+
 ### Environment setup
 
 I am using the MSYS2 mingw 64-bit g++ compiler for installation of libraries and such.
@@ -30,26 +32,21 @@ To install libraries in msys2
 pacman -S mingw-w64-x86_64-glew mingw-w64-x86_64-glfw mingw-w64-x86_64-stb mingw-w64-x86_64-freetype mingw-w64-x86_64-crt-git
 ```
 
-For the build script to work
+### To build
 ```
-pip install termcolor
-```
-
-After proper installation and configuration of libraries run
-
-``` 
-python builder.py
+cargo install builder_cpp
+builder_cpp -b
 ```
 
 To clean build, run
 
 ```
-python builder.py rb
+builder_cpp -rb
 ```
 
 To run
 ```
-python builder.py run
+builder_cpp -r
 ```
 
 The binaries will be placed in the bin directory
