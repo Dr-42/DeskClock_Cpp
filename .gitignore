@@ -1,4 +1,2 @@
-bin
-obj
 compile_commands.json
-*.hash
+.bld_cpp

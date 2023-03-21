@@ -1,5 +1,13 @@
 #include <GL/glew.h>
+#ifdef _WIN32
+#define GLFW_EXPOSE_NATIVE_WIN32
+#endif
+#ifdef __linux__
+#define GLFW_EXPOSE_NATIVE_X11
+#include <X11/Xlib.h>
+#endif
 #include <GLFW/glfw3.h>
+#include <GLFW/glfw3native.h>
 #define MINIAUDIO_IMPLEMENTATION
 #include "miniaudio.h"
 
@@ -13,6 +21,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
+void hide_taskbar_icon(GLFWwindow* window);
 
 // The Width of the screen
 const unsigned int SCREEN_WIDTH = 450;
@@ -38,6 +47,8 @@ int main(int argc, char *argv[])
     GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "App", nullptr, nullptr);
     glfwSetWindowPos(window, 735, 50);
     glfwMakeContextCurrent(window);
+    //Get GLFW display
+    hide_taskbar_icon(window);
 
     // glew: load all OpenGL function pointers
     // ---------------------------------------
@@ -138,3 +149,33 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     // height will be significantly larger than specified on retina displays.
     glViewport(0, 0, width, height);
 }
+
+//Hide taskbar icon in windows
+#ifdef _WIN32
+void hide_taskbar_icon(GLFWwindow* win)
+{
+    glfwHideWindow(win);
+    SetWindowLong(glfwGetWin32Window(win), GWL_EXSTYLE, WS_EX_TOOLWINDOW);
+    glfwShowWindow(win);
+}
+#endif
+
+//Hide taskbar icon in linux
+#ifdef __linux__
+void hide_taskbar_icon(GLFWwindow* window){
+    Window win = glfwGetX11Window(window);
+    Display* display = glfwGetX11Display();
+    XEvent xev;
+    Atom _NET_WM_STATE = XInternAtom(display, "_NET_WM_STATE", False);
+    Atom _NET_WM_STATE_SKIP_TASKBAR = XInternAtom(display, "_NET_WM_STATE_SKIP_TASKBAR", False);
+    memset(&xev, 0, sizeof(xev));
+    xev.type = ClientMessage;
+    xev.xclient.window = win;
+    xev.xclient.message_type = _NET_WM_STATE;
+    xev.xclient.format = 32;
+    xev.xclient.data.l[0] = 1;
+    xev.xclient.data.l[1] = _NET_WM_STATE_SKIP_TASKBAR;
+    xev.xclient.data.l[2] = 0;
+    XSendEvent(display, DefaultRootWindow(display), False, SubstructureRedirectMask | SubstructureNotifyMask, &xev);
+}
+#endif

@@ -101,8 +101,6 @@ void Game::Init(){
         std::exit(1);
     }
 
-    ma_sound_start(&sound);
-
 }
 void Game::ProcessInput(float dt)
 {
@@ -201,13 +199,13 @@ void Game::Update(float dt)
     root->GetChild("day")->GetComponent<Text>()->SetText(day);
 
     //Play gong.wav every minute
-    if(second == 0 && !played){
+    if(second == 0 && minute == 0 && !played){
         ma_sound_start(&sound);
         played = true;
     }
 
     if(second != 0){
-        if (ma_sound_at_end(&sound)) {
+        if (ma_sound_at_end(&sound)){
             ma_sound_stop(&sound);
             ma_sound_seek_to_pcm_frame(&sound, 0);
         }
