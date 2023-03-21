@@ -1,8 +1,8 @@
 #include "game.h"
 #include <ctime>
-#include <windows.h>
 
 #include <iostream>
+#include <unistd.h>
 
 Game::Game(unsigned int width, unsigned int height)
 {
@@ -61,7 +61,7 @@ void Game::Init(){
     e->SetName("second_hand");
     root->AddChild(e);
 
-        root->Init();
+    root->Init();
 
     // configure game objects
     root->GetChild("clock")->GetComponent<Transform>()->SetPosition(glm::vec2(Width / 2.0f, Height / 2.0f));
@@ -88,17 +88,32 @@ void Game::Init(){
     root->GetChild("day")->GetComponent<Transform>()->SetScale(glm::vec2(1.0f, 1.0f));
 
     root->GetChild("day")->GetComponent<Text>()->SetColor(glm::vec3(0.3f, 0.0f, 0.3f));
+
+    result = ma_engine_init(NULL, &engine);
+    if (result != MA_SUCCESS) {
+        std::cout << "Failed to initialize miniaudio engine: " << result << std::endl;
+        std::exit(1);
+    }
+
+    result = ma_sound_init_from_file(&engine, "assets/sound/gong.wav", 0, NULL, NULL, &sound);
+    if (result != MA_SUCCESS) {
+        std::cout << "Failed to initialize miniaudio sound: " << result << std::endl;
+        std::exit(1);
+    }
+
+    ma_sound_start(&sound);
+
 }
 void Game::ProcessInput(float dt)
 {
-   if(this->Keys[GLFW_KEY_SPACE]){
-       wireframe = !wireframe;
-       if(wireframe){
-           glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-       }else{
-           glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-       }
-   }
+    if(this->Keys[GLFW_KEY_SPACE]){
+        wireframe = !wireframe;
+        if(wireframe){
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        }else{
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        }
+    }
 }
 
 void Game::Update(float dt)
@@ -164,37 +179,42 @@ void Game::Update(float dt)
     //the clock is at the center of the screen
 
     root->GetChild("hour_hand")->GetComponent<Transform>()->SetPosition(
-                glm::vec2(Width / 2.0f, Height / 2.0f) +
-                glm::vec2(HOUR_HAND_LENGTH / 3.0f * glm::cos(hour_angle_rad),
-                         HOUR_HAND_LENGTH / 3.0f * glm::sin(hour_angle_rad)));
+            glm::vec2(Width / 2.0f, Height / 2.0f) +
+            glm::vec2(HOUR_HAND_LENGTH / 3.0f * glm::cos(hour_angle_rad),
+                      HOUR_HAND_LENGTH / 3.0f * glm::sin(hour_angle_rad)));
     root->GetChild("hour_hand")->GetComponent<Transform>()->SetRotation(hour_angle);
 
     root->GetChild("minute_hand")->GetComponent<Transform>()->SetPosition(
-                glm::vec2(Width / 2.0f, Height / 2.0f) +
-                glm::vec2(MINUTE_HAND_LENGTH / 4.0f * glm::cos(minute_angle_rad),
-                        MINUTE_HAND_LENGTH / 4.0f * glm::sin(minute_angle_rad)));
+            glm::vec2(Width / 2.0f, Height / 2.0f) +
+            glm::vec2(MINUTE_HAND_LENGTH / 4.0f * glm::cos(minute_angle_rad),
+                      MINUTE_HAND_LENGTH / 4.0f * glm::sin(minute_angle_rad)));
     root->GetChild("minute_hand")->GetComponent<Transform>()->SetRotation(minute_angle);
 
     root->GetChild("second_hand")->GetComponent<Transform>()->SetPosition(
-                glm::vec2(Width / 2.0f, Height / 2.0f) +
-                glm::vec2(SECOND_HAND_LENGTH / 4.0f * glm::cos(second_angle_rad),
-                        SECOND_HAND_LENGTH / 4.0f * glm::sin(second_angle_rad)));
+            glm::vec2(Width / 2.0f, Height / 2.0f) +
+            glm::vec2(SECOND_HAND_LENGTH / 4.0f * glm::cos(second_angle_rad),
+                      SECOND_HAND_LENGTH / 4.0f * glm::sin(second_angle_rad)));
 
     root->GetChild("second_hand")->GetComponent<Transform>()->SetRotation(second_angle);
 
     root->GetChild("date")->GetComponent<Text>()->SetText(date);
     root->GetChild("day")->GetComponent<Text>()->SetText(day);
 
-    //Play gong.wav every hour
-    if(second == 0 && minute == 0 && !played){
-        played = PlaySound(TEXT("assets/sound/Gong.wav"), NULL, SND_FILENAME | SND_ASYNC);
+    //Play gong.wav every minute
+    if(second == 0 && !played){
+        ma_sound_start(&sound);
+        played = true;
     }
 
     if(second != 0){
+        if (ma_sound_at_end(&sound)) {
+            ma_sound_stop(&sound);
+            ma_sound_seek_to_pcm_frame(&sound, 0);
+        }
         played = false;
     }
 
-    Sleep(1000 - dt);
+    usleep(1000 - dt);
 }
 
 void Game::Render(){

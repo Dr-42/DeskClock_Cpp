@@ -4,6 +4,8 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include "miniaudio.h"
+
 #include "ecs/entity.h"
 #include "components/transform.h"
 #include "components/sprite.h"
@@ -13,8 +15,7 @@
 #include "utils/resource_manager.h"
 #include "renderer/text_renderer.h"
 
-class Game
-{
+class Game{
 public:
     // game state
     bool                    Keys[1024];
@@ -24,6 +25,11 @@ public:
     bool                    wireframe;
     Entity*                 root;
     bool                    played = false;
+    //audio
+    ma_engine               engine;
+    ma_result               result;
+    ma_sound                sound;
+    
     // constructor/destructor
     Game(unsigned int width, unsigned int height);
     ~Game();
