@@ -212,7 +212,7 @@ void Game::Update(float dt)
         played = false;
     }
 
-    usleep(1000 - dt);
+    usleep(1000000 - dt*1000);
 }
 
 void Game::Render(){
