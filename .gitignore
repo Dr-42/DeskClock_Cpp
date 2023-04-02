@@ -1,2 +1,4 @@
 compile_commands.json
 .bld_cpp
+.cache
+
