@@ -30,8 +30,7 @@ const unsigned int SCREEN_HEIGHT = 450;
 
 Game App(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char* argv[]) {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -47,14 +46,13 @@ int main(int argc, char *argv[])
     GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "App", nullptr, nullptr);
     glfwSetWindowPos(window, 735, 50);
     glfwMakeContextCurrent(window);
-    //Get GLFW display
+    // Get GLFW display
     hide_taskbar_icon(window);
 
     // glew: load all OpenGL function pointers
     // ---------------------------------------
     GLenum err = glewInit();
-    if (glewInit() != GLEW_OK)
-    {
+    if (glewInit() != GLEW_OK) {
         std::cout << "Failed to initialize GLEW error" << err << std::endl;
         return -1;
     }
@@ -77,8 +75,7 @@ int main(int argc, char *argv[])
     float deltaTime = 0.0f;
     float lastFrame = 0.0f;
 
-    while (!glfwWindowShouldClose(window))
-    {
+    while (!glfwWindowShouldClose(window)) {
         // calculate delta time
         // --------------------
         float currentFrame = glfwGetTime();
@@ -111,13 +108,11 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
-{
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode) {
     // when a user presses the escape key, we set the WindowShouldClose property to true, closing the application
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
-    if (key >= 0 && key < 1024)
-    {
+    if (key >= 0 && key < 1024) {
         if (action == GLFW_PRESS)
             App.Keys[key] = true;
         else if (action == GLFW_RELEASE)
@@ -125,16 +120,15 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     }
 }
 
-void cursor_position_callback(GLFWwindow* window, double xpos, double ypos){
+void cursor_position_callback(GLFWwindow* window, double xpos, double ypos) {
     App.MousePos->x = xpos;
     App.MousePos->y = ypos;
 }
 
-void mouse_button_callback(GLFWwindow* window, int button, int action, int mods){
-    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS){
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods) {
+    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
         App.MouseLeft = true;
-    }
-    else if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
+    } else if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
         App.MouseLeft = false;
 
     if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS)
@@ -143,26 +137,25 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
         App.MouseRight = false;
 }
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-{
-    // make sure the viewport matches the new window dimensions; note that width and 
+void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+    // make sure the viewport matches the new window dimensions; note that width and
     // height will be significantly larger than specified on retina displays.
     glViewport(0, 0, width, height);
 }
 
-//Hide taskbar icon in windows
+// Hide taskbar icon in windows
 #ifdef _WIN32
-void hide_taskbar_icon(GLFWwindow* win)
-{
+void hide_taskbar_icon(GLFWwindow* win) {
+    FreeConsole();
     glfwHideWindow(win);
     SetWindowLong(glfwGetWin32Window(win), GWL_EXSTYLE, WS_EX_TOOLWINDOW);
     glfwShowWindow(win);
 }
 #endif
 
-//Hide taskbar icon in linux
+// Hide taskbar icon in linux
 #ifdef __linux__
-void hide_taskbar_icon(GLFWwindow* window){
+void hide_taskbar_icon(GLFWwindow* window) {
     Window win = glfwGetX11Window(window);
     Display* display = glfwGetX11Display();
     XEvent xev;
