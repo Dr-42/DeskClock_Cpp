@@ -79,12 +79,12 @@ void Game::Init() {
     root->GetChild("date")->GetComponent<Transform>()->SetPosition(glm::vec2(120.0, Height / 2.0f));
     root->GetChild("date")->GetComponent<Transform>()->SetScale(glm::vec2(1.0f, 1.0f));
 
-    root->GetChild("date")->GetComponent<Text>()->SetColor(glm::vec3(0.3f, 0.0f, 0.3f));
+    root->GetChild("date")->GetComponent<Text>()->SetColor(glm::vec3(0.6f, 0.3f, 0.0f));
 
     root->GetChild("day")->GetComponent<Transform>()->SetPosition(glm::vec2(180, Height / 2.0f + 70));
     root->GetChild("day")->GetComponent<Transform>()->SetScale(glm::vec2(1.0f, 1.0f));
 
-    root->GetChild("day")->GetComponent<Text>()->SetColor(glm::vec3(0.3f, 0.0f, 0.3f));
+    root->GetChild("day")->GetComponent<Text>()->SetColor(glm::vec3(0.6f, 0.3f, 0.0f));
 
     result = ma_engine_init(NULL, &engine);
     if (result != MA_SUCCESS) {
