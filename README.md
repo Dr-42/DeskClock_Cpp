@@ -52,6 +52,21 @@ builder_cpp -r
 ```
 
 The binaries will be placed in the bin directory
+
+## Config
+
+The windows config is in C:\User\<username>\Roaming\DeskClock_Cpp\config.txt
+
+The linux config file is in $HOME/.config/DeskClock_Cpp/config.txt
+
+You may edit the width, height and x and y pos of the center.
+
+If you bork the config, just delete the file and the pprogram will regenerate a default config if there is no such file.
+
+## Images
+
 ![clk](https://user-images.githubusercontent.com/64161204/202875201-9323d65a-1955-4972-ba35-8dc294f3800a.png)
+
+## Additional credits
 
 Audio is handled using [miniaudio](https://github.com/mackron/miniaudio)

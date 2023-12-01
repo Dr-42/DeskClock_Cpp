@@ -1,8 +1,10 @@
 #include "game.h"
 #include <ctime>
 
+#include <filesystem>
 #include <iostream>
 #include <unistd.h>
+#include <fstream>
 
 Game::Game(unsigned int width, unsigned int height) {
     this->Width = width;
