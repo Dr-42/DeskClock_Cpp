@@ -119,6 +119,7 @@ int main(int argc, char* argv[]) {
     glfwWindowHint(GLFW_DECORATED, false);
     glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, true);
     glfwWindowHint(GLFW_FOCUSED, false);
+    glfwWindowHint(GLFW_SAMPLES, 16);
 
     GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "App", nullptr, nullptr);
     glfwSetWindowPos(window, pos.x, pos.y);
@@ -144,6 +145,7 @@ int main(int argc, char* argv[]) {
     glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_MULTISAMPLE);
 
     App.Init();
 

@@ -27,7 +27,7 @@ Game::~Game() {
 
 #define HOUR_HAND_WIDTH 10.0f
 #define MINUTE_HAND_WIDTH 5.0f
-#define SECOND_HAND_WIDTH 2.0f
+#define SECOND_HAND_WIDTH 3.0f
 
 void Game::Init() {
     // load shaders
