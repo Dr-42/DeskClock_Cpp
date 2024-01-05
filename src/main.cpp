@@ -119,7 +119,9 @@ int main(int argc, char* argv[]) {
     glfwWindowHint(GLFW_DECORATED, false);
     glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, true);
     glfwWindowHint(GLFW_FOCUSED, false);
+    #ifndef __linux__
     glfwWindowHint(GLFW_SAMPLES, 16);
+    #endif
 
     GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "App", nullptr, nullptr);
     glfwSetWindowPos(window, pos.x, pos.y);
@@ -145,7 +147,9 @@ int main(int argc, char* argv[]) {
     glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    #ifndef __linux__
     glEnable(GL_MULTISAMPLE);
+    #endif
 
     App.Init();
 
