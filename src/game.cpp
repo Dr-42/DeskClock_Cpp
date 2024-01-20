@@ -35,7 +35,7 @@ void Game::Init() {
     ResourceManager::LoadTexture("assets/textures/clock_face.png", true, "face");
     ResourceManager::LoadTexture("assets/textures/clock_hand.png", true, "hand");
 
-    const char* fontPath = "assets/fonts/OCRAEXT.TTF";
+    const char* fontPath = "assets/fonts/seven_seg.ttf";
     ResourceManager::LoadShader("assets/shaders/text_vert_shad.glsl", "assets/shaders/text_frag_shad.glsl", nullptr, "text");
 
     MousePos = new glm::vec2(0.0f, 0.0f);
@@ -79,12 +79,12 @@ void Game::Init() {
     root->GetChild("second_hand")->GetComponent<Sprite>()->SetColor(glm::vec4(0.9f, 0.0f, 0.0f, 1.0f));
 
     root->GetChild("date")->GetComponent<Transform>()->SetPosition(glm::vec2(120.0, Height / 2.0f));
-    root->GetChild("date")->GetComponent<Transform>()->SetScale(glm::vec2(1.0f, 1.0f));
+    root->GetChild("date")->GetComponent<Transform>()->SetScale(glm::vec2(0.7f, 0.5f));
 
     root->GetChild("date")->GetComponent<Text>()->SetColor(glm::vec3(0.6f, 0.3f, 0.0f));
 
     root->GetChild("day")->GetComponent<Transform>()->SetPosition(glm::vec2(180, Height / 2.0f + 70));
-    root->GetChild("day")->GetComponent<Transform>()->SetScale(glm::vec2(1.0f, 1.0f));
+    root->GetChild("day")->GetComponent<Transform>()->SetScale(glm::vec2(0.7f, 0.5f));
 
     root->GetChild("day")->GetComponent<Text>()->SetColor(glm::vec3(0.6f, 0.3f, 0.0f));
 
