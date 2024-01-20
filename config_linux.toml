@@ -1,5 +1,5 @@
 [build]
-compiler = "g++"
+compiler = "clang++"
 
 [[targets]]
 name = "DeskClock"
